@@ -4,13 +4,13 @@ on:
     types: [published, edited]
   push:
     branches:
-      - main
-      - master
+      - juicebox_commands
+
   workflow_dispatch:
 
 jobs:
   build_and_publish_docker_image:
-    if: github.repository_owner == 'snicker'
+    if: github.repository_owner == 'niharmehta'
     runs-on: ubuntu-latest
     steps:      
       - name: Debug Variables
@@ -46,8 +46,6 @@ jobs:
           flavor: |
             latest=auto
           tags: |
-            type=edge,branch=main
-            type=edge,branch=master
             type=semver,pattern={{version}}
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
