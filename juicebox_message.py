@@ -80,8 +80,13 @@ def process_frequency(message, value):
 def process_current(message, value):
     if value is None:
         return 0
-        
+
     return round(float(value) * 0.1, 1)
+
+
+def process_power_factor(message, value):
+
+    return round(float(value) * 0.001, 3)
 
 
 
@@ -114,7 +119,10 @@ FROM_JUICEBOX_FIELD_DEFS = {
     # the max current to be used when connected to server
     "M" : { "alias" : "current_max_online", "process" : process_int },
     "L" : { "alias" : "energy_lifetime", "process" : process_int },
-    # p ?
+    #     power factor most of the times are over 0980 which appear to be ok
+    #     but when car stops charging goes very low which is strange
+    #     https://github.com/JuiceRescue/juicepassproxy/issues/84
+    "p" : { "alias" : "power_factor", "process" : process_power_factor },
     # P ? v09u - does not came when car is unplugged and appear to be allways 0
     # r ? v09u - appear to be fixed to 995 in one device, but found other values 
     #     https://github.com/JuiceRescue/juicepassproxy/issues/84#issuecomment-2424907089
