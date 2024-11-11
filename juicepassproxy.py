@@ -264,7 +264,7 @@ async def parse_args():
         "--log_loc",
         type=str,
         metavar="LOC",
-        default=Path.home(),
+        default=str(Path.home()),
         help="The location to store the log files (default: %(default)s)",
     )
 
@@ -504,7 +504,7 @@ async def main():
     ):
         pass
     else:
-        juicebox_id = config.get("JUICEBOX_ID")
+        juicebox_id = config.get("JUICEBOX_ID", None)
     if juicebox_id:
         config.update_value("JUICEBOX_ID", juicebox_id)
         _LOGGER.info(f"juicebox_id: {juicebox_id}")
